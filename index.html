@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Práctica de Ciencias Naturales - Alethia 🌿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --leaf: #86EFAC;
+  --leaf-dark: #22C55E;
+  --mint: #A7F3D0;
+  --mint-dark: #34D399;
+  --forest: #166534;
+  --sky: #BAE6FD;
+  --sky-dark: #38BDF8;
+  --sun: #FEF08A;
+  --bg: #F0FDF4;
+  --card: #FFFFFF;
+  --text: #14532D;
+  --text-light: #4B7B5E;
+  --shadow: 0 8px 32px rgba(34,197,94,0.12);
+  --radius: 20px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.container {
+  width: 100%;
+  max-width: 720px;
+  position: relative;
+}
+/* Decorative elements */
+.deco { position: fixed; font-size: 40px; opacity: 0.15; pointer-events: none; z-index: 0; }
+.deco1 { top: 5%; left: 5%; }
+.deco2 { top: 15%; right: 8%; }
+.deco3 { bottom: 10%; left: 8%; }
+.deco4 { bottom: 5%; right: 5%; }
+.deco5 { top: 45%; left: 3%; }
+.deco6 { top: 40%; right: 3%; }
+
+/* Screens */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* PORTADA */
+#portada {
+  background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 50%, #FEFCE8 100%);
+  border-radius: var(--radius);
+  padding: 48px 36px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 2px solid rgba(134,239,172,0.3);
+}
+#portada .korean-title {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 22px;
+  color: var(--text-light);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+#portada h1 {
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #16A34A, #22C55E, #0D9488);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+#portada .subtitle {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+#portada .hearts { font-size: 28px; margin-bottom: 20px; }
+#portada .avatar {
+  width: 120px; height: 120px;
+  background: linear-gradient(135deg, var(--leaf), var(--mint));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 52px;
+  box-shadow: 0 4px 20px rgba(34,197,94,0.2);
+}
+#portada .info-box {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+#portada .info-box strong { color: var(--text); }
+#portada .info-box .emoji { margin-right: 8px; }
+.btn-start {
+  background: linear-gradient(135deg, #16A34A, #0D9488);
+  color: white;
+  border: none;
+  padding: 16px 48px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(22,163,74,0.3);
+}
+.btn-start:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(22,163,74,0.4); }
+
+/* EXAM SCREEN */
+#examen {
+  background: white;
+  border-radius: var(--radius);
+  padding: 0;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 2px solid rgba(134,239,172,0.2);
+}
+.exam-header {
+  background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
+  padding: 20px 28px;
+  border-bottom: 1px solid rgba(134,239,172,0.2);
+}
+.exam-header .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.exam-header .exam-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+.exam-header .question-counter {
+  font-size: 14px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(134,239,172,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--leaf-dark), var(--mint-dark));
+  border-radius: 10px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.topic-label {
+  text-align: center;
+  padding: 12px 28px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mint-dark);
+  background: rgba(134,239,172,0.08);
+  border-bottom: 1px solid rgba(134,239,172,0.1);
+  letter-spacing: 0.5px;
+}
+.aleth-name {
+  text-align: center;
+  padding: 6px 28px 2px;
+  font-size: 20px;
+  font-weight: 900;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(135deg, #16A34A, #0D9488);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 3px;
+}
+.reset-exam-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: var(--text-light);
+  opacity: 0.25;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.reset-exam-btn:hover {
+  opacity: 0.8;
+  color: #F87171;
+  background: rgba(248,113,113,0.06);
+}
+.reset-hidden {
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.3s;
+  position: relative;
+}
+.reset-hidden:hover { opacity: 0.5; }
+.reset-hidden:active { opacity: 0.3; }
+.reset-hidden::after {
+  content: "···";
+  display: block;
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: var(--text-light);
+  opacity: 0.3;
+  margin-top: -4px;
+  transition: opacity 0.3s;
+}
+.reset-hidden:hover::after { opacity: 0.8; }
+.reset-toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--mint-dark);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(52,211,153,0.3);
+  z-index: 1000;
+  display: none;
+  animation: fadeInUp 0.3s ease;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.question-body {
+  padding: 28px;
+  min-height: 320px;
+}
+.question-text {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+.question-context {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+/* Question type: Multiple Choice */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 2px solid rgba(134,239,172,0.25);
+  border-radius: 14px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  text-align: left;
+  color: var(--text);
+}
+.option-btn:hover { border-color: var(--leaf-dark); background: rgba(134,239,172,0.05); }
+.option-btn.selected { border-color: var(--leaf-dark); background: rgba(34,197,94,0.08); }
+.option-btn .letter {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(134,239,172,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--leaf-dark);
+  flex-shrink: 0;
+}
+.option-btn.selected .letter { background: var(--leaf-dark); color: white; }
+
+/* T/F */
+.tf-buttons { display: flex; gap: 16px; justify-content: center; margin-top: 20px; }
+.tf-btn {
+  flex: 1; max-width: 180px;
+  padding: 20px;
+  border: 2px solid rgba(134,239,172,0.25);
+  border-radius: 16px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+}
+.tf-btn:hover { border-color: var(--leaf-dark); transform: translateY(-2px); }
+.tf-btn.selected-true { border-color: #34D399; background: rgba(52,211,153,0.08); }
+.tf-btn.selected-false { border-color: #F87171; background: rgba(248,113,113,0.08); }
+.tf-btn .icon { font-size: 36px; display: block; margin-bottom: 8px; }
+.tf-btn .label { font-size: 18px; font-weight: 700; }
+
+/* Write Number */
+.number-input-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+.number-input {
+  width: 120px;
+  padding: 14px 18px;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+  border: 2px solid rgba(134,239,172,0.3);
+  border-radius: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.number-input:focus { border-color: var(--leaf-dark); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+.number-unit { font-size: 20px; font-weight: 600; color: var(--text-light); }
+
+/* Drag & Drop */
+.dnd-container { margin-top: 16px; }
+.dnd-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dnd-item {
+  padding: 14px 18px;
+  border: 2px solid rgba(134,239,172,0.2);
+  border-radius: 12px;
+  background: white;
+  cursor: grab;
+  font-size: 15px;
+  transition: all 0.2s;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dnd-item:hover { border-color: var(--leaf); background: rgba(134,239,172,0.04); }
+.dnd-item.dragging { opacity: 0.5; border-style: dashed; }
+.dnd-item.drag-over { border-color: var(--leaf-dark); background: rgba(34,197,94,0.06); }
+.dnd-item .drag-handle {
+  font-size: 20px; color: var(--text-light); cursor: grab;
+  flex-shrink: 0;
+}
+.dnd-item .dnd-number {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--leaf);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.dnd-hint { font-size: 13px; color: var(--text-light); margin-bottom: 12px; text-align: center; }
+
+/* Nav buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 28px;
+  border-top: 1px solid rgba(134,239,172,0.1);
+  gap: 12px;
+}
+.nav-btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn.prev {
+  background: rgba(134,239,172,0.12);
+  color: var(--text);
+}
+.nav-btn.prev:hover { background: rgba(134,239,172,0.2); }
+.nav-btn.next {
+  background: linear-gradient(135deg, var(--leaf-dark), var(--mint-dark));
+  color: white;
+  margin-left: auto;
+}
+.nav-btn.next:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(34,197,94,0.3); }
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+.nav-btn.submit {
+  background: linear-gradient(135deg, #34D399, #0D9488);
+  color: white;
+  margin-left: auto;
+}
+
+/* Drag match */
+.dnd-match {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+.dnd-match-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dnd-match-col h4 {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+  text-align: center;
+  font-weight: 700;
+}
+.match-source {
+  padding: 12px 14px;
+  border: 2px solid rgba(134,239,172,0.2);
+  border-radius: 12px;
+  background: white;
+  cursor: grab;
+  font-size: 14px;
+  text-align: center;
+  transition: all 0.2s;
+  user-select: none;
+}
+.match-source.dragging { opacity: 0.4; }
+.match-target {
+  padding: 12px 14px;
+  border: 2px dashed rgba(134,239,172,0.3);
+  border-radius: 12px;
+  background: rgba(134,239,172,0.04);
+  font-size: 14px;
+  text-align: center;
+  min-height: 46px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.match-target.drag-over { border-color: var(--leaf-dark); background: rgba(34,197,94,0.08); }
+.match-target.filled { border-style: solid; border-color: var(--mint-dark); background: rgba(52,211,153,0.06); }
+
+/* RESULTS */
+#resultados {
+  background: white;
+  border-radius: var(--radius);
+  padding: 36px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 2px solid rgba(134,239,172,0.2);
+}
+#resultados .big-icon { font-size: 64px; margin-bottom: 12px; }
+#resultados h2 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+#resultados .result-subtitle { color: var(--text-light); font-size: 16px; margin-bottom: 24px; }
+.score-circle {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--leaf), var(--mint-dark));
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  box-shadow: 0 4px 20px rgba(34,197,94,0.2);
+}
+.score-circle .score-num { font-size: 40px; font-weight: 900; color: white; }
+.score-circle .score-label { font-size: 14px; color: rgba(255,255,255,0.8); }
+.breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+  text-align: left;
+}
+.breakdown-item {
+  padding: 12px 16px;
+  background: rgba(134,239,172,0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(134,239,172,0.1);
+}
+.breakdown-item .b-topic { font-size: 12px; color: var(--text-light); font-weight: 600; }
+.breakdown-item .b-score { font-size: 18px; font-weight: 800; color: var(--text); }
+.breakdown-item .b-score .b-total { color: var(--text-light); font-weight: 400; font-size: 14px; }
+.message-box {
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(134,239,172,0.08);
+  margin: 20px 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.btn-retry {
+  padding: 14px 40px;
+  border: 2px solid var(--leaf);
+  background: white;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  color: var(--leaf-dark);
+  transition: all 0.2s;
+}
+.btn-retry:hover { background: var(--leaf); color: white; }
+
+/* Responsive */
+@media (max-width: 500px) {
+  #portada { padding: 32px 20px; }
+  #portada h1 { font-size: 24px; }
+  .question-body { padding: 20px; }
+  .question-text { font-size: 17px; }
+  .exam-header { padding: 14px 20px; }
+  .nav-buttons { padding: 12px 20px; }
+  .breakdown { grid-template-columns: 1fr; }
+  .dnd-match { flex-direction: column; }
+  #resultados { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Decorative elements -->
+  <div class="deco deco1">🌿</div>
+  <div class="deco deco2">🍃</div>
+  <div class="deco deco3">🌱</div>
+  <div class="deco deco4">🌍</div>
+  <div class="deco deco5">🌻</div>
+  <div class="deco deco6">🌙</div>
+
+  <!-- PORTADA -->
+  <div id="portada" class="screen active">
+    <div class="korean-title reset-hidden" id="resetTrigger" onclick="tripleTapReset()">과학 연습</div>
+    <h1>🌿 Práctica de Ciencias Naturales</h1>
+    <div class="subtitle">para Alethia</div>
+    <div class="avatar">🌱</div>
+    <div class="hearts">🌿 🍃 🌿 🍃 🌿</div>
+    <div class="info-box">
+      <div><span class="emoji">📝</span><strong>36 reactivos</strong> · 6 temas · <strong>3 versiones</strong> distintas</div>
+      <div><span class="emoji">🔄</span>Cada versión renueva parte de las preguntas</div>
+      <div><span class="emoji">🎯</span>Tipos: <strong>Opción múltiple · Falso/Verdadero · Arrastrar · Escribir número</strong></div>
+      <div><span class="emoji">⏱️</span>Tómate tu tiempo, no hay límite — esto es para practicar</div>
+      <div><span class="emoji">💡</span>Al final verás tu resultado por tema</div>
+      <div style="margin-top:10px; text-align:center; color:var(--mint-dark); font-size:13px;">
+        파이팅! (¡Fighting!) — Tú puedes, Alethia 🌿
+      </div>
+    </div>
+    <button class="btn-start" onclick="startExam()">🌿 ¡Comenzar!</button>
+  </div>
+
+  <!-- EXAM -->
+  <div id="examen" class="screen">
+    <div class="exam-header" style="position:relative;">
+      <div class="top-row">
+        <span class="exam-title">🌿 Práctica de Ciencias Naturales</span>
+        <span class="question-counter" id="qCounter">1 / 36</span>
+      </div>
+      <div class="progress-container">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <button class="reset-exam-btn" onclick="resetDuringExam()" title="Reiniciar examen (para pruebas)">↺</button>
+    </div>
+    <div class="aleth-name">✨ Aleth 🌿 ✨</div>
+    <div class="topic-label" id="topicLabel">Tema 1 · Ciencia, materia y cambio</div>
+    <div class="question-body" id="questionBody">
+      <!-- Rendered by JS -->
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-btn prev" id="prevBtn" onclick="prevQuestion()">← Anterior</button>
+      <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()">Siguiente →</button>
+      <button class="nav-btn submit" id="submitBtn" onclick="finishExam()" style="display:none">🌿 Finalizar</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultados" class="screen">
+    <div class="big-icon" id="resultIcon">🌿</div>
+    <h2 id="resultTitle">¡Lo hiciste increíble!</h2>
+    <div class="result-subtitle" id="resultSubtitle">Aquí están tus resultados</div>
+    <div class="score-circle">
+      <span class="score-num" id="finalScore">0</span>
+      <span class="score-label" id="scoreLabel">de 36 aciertos</span>
+    </div>
+    <div id="percentage" style="font-size:24px;font-weight:700;color:var(--mint-dark);margin-bottom:16px;">0%</div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="message-box" id="resultMessage"></div>
+    <button class="btn-retry" onclick="resetExam()">🔄 Practicar de nuevo</button>
+  </div>
+</div>
+
+<!-- Reset toast notification -->
+<div class="reset-toast" id="resetToast">✅ Examen reiniciado</div>
+
+<script>
+// ====== QUESTION DATA ======
+const QUESTIONS = [
+  // TEMA 1: Ciencia, materia y cambio (1-6)
+  {
+    id: 1, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "mc",
+    question: "¿Qué significa que un objeto sea natural?",
+    options: [
+      "Que fue creado por el ser humano",
+      "Que existe en la naturaleza sin intervención humana",
+      "Que está hecho de plástico",
+      "Que se encuentra en una tienda"
+    ],
+    answer: 1
+  },
+  {
+    id: 2, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "mc",
+    question: "¿En qué estado de la materia las moléculas apenas vibran en una posición fija?",
+    options: ["Líquido", "Gaseoso", "Sólido", "Plasma"],
+    answer: 2
+  },
+  {
+    id: 3, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "mc",
+    question: "Una característica del estado líquido es que:",
+    options: [
+      "Tiene forma propia y volumen fijo",
+      "Se adapta a la forma del recipiente que lo contiene",
+      "Se expande indefinidamente",
+      "Sus moléculas no se mueven"
+    ],
+    answer: 1
+  },
+  {
+    id: 4, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "tf",
+    question: "Los gases ocupan completamente el espacio del recipiente en el que están encerrados.",
+    answer: true
+  },
+  {
+    id: 5, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "tf",
+    question: "Una olla de barro se considera un objeto natural porque el barro viene de la tierra.",
+    answer: false
+  },
+  {
+    id: 6, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "dnd-order",
+    question: "Ordena los pasos del cambio de estado del agua al calentarse:",
+    items: [
+      "El agua hierve y se convierte en vapor (gas)",
+      "El hielo (sólido) se derrite",
+      "El agua (líquida) aumenta su temperatura"
+    ],
+    answer: [1, 2, 0]
+  },
+
+  // TEMA 2: La vida (7-12)
+  {
+    id: 7, topic: 2, topicName: "La vida",
+    type: "mc",
+    question: "¿Cuáles son los elementos indispensables para la vida en la Tierra?",
+    options: [
+      "Agua, fuego y tierra",
+      "Agua, aire, tierra y sol",
+      "Aire, fuego y agua",
+      "Tierra, fuego y aire"
+    ],
+    answer: 1
+  },
+  {
+    id: 8, topic: 2, topicName: "La vida",
+    type: "mc",
+    question: "El ser humano podría sobrevivir un tiempo sin alimento, pero no sin:",
+    options: [
+      "Oxígeno, que está en el aire",
+      "Televisión",
+      "Ropa nueva",
+      "Teléfono celular"
+    ],
+    answer: 0
+  },
+  {
+    id: 9, topic: 2, topicName: "La vida",
+    type: "tf",
+    question: "El dióxido de carbono que exhalamos es aprovechado por las plantas para realizar sus funciones vitales.",
+    answer: true
+  },
+  {
+    id: 10, topic: 2, topicName: "La vida",
+    type: "mc",
+    question: "¿Por qué el suelo es importante para los organismos terrestres?",
+    options: [
+      "Porque les sirve de base y les proporciona nutrimentos",
+      "Porque solo sirve para construir casas",
+      "Porque no tiene ninguna función importante",
+      "Porque solo almacena agua"
+    ],
+    answer: 0
+  },
+  {
+    id: 11, topic: 2, topicName: "La vida",
+    type: "mc",
+    question: "Al morir un organismo, sus tejidos se descomponen y sus componentes:",
+    options: [
+      "Desaparecen para siempre",
+      "Se integran al medio como nutrientes",
+      "Se convierten en piedras",
+      "Flotan en el aire indefinidamente"
+    ],
+    answer: 1
+  },
+  {
+    id: 12, topic: 2, topicName: "La vida",
+    type: "tf",
+    question: "El agua es un componente importante en los tejidos de todos los seres vivos.",
+    answer: true
+  },
+
+  // TEMA 3: Ciclos de la naturaleza (13-18)
+  {
+    id: 13, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "mc",
+    question: "En el ciclo del agua, ¿cómo se llama el proceso en que el agua líquida se convierte en vapor?",
+    options: ["Condensación", "Evaporación", "Solidificación", "Filtración"],
+    answer: 1
+  },
+  {
+    id: 14, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "mc",
+    question: "El ciclo del carbono es importante porque las plantas lo utilizan durante la:",
+    options: ["Respiración", "Fotosíntesis", "Digestión", "Evaporación"],
+    answer: 1
+  },
+  {
+    id: 15, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "tf",
+    question: "El ciclo del nitrógeno permite la formación de proteínas en los seres vivos.",
+    answer: true
+  },
+  {
+    id: 16, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "dnd-order",
+    question: "Ordena las fases del ciclo del agua:",
+    items: [
+      "El agua vuelve a la tierra en forma de lluvia",
+      "El sol calienta el agua y se evapora",
+      "El vapor se enfría y forma nubes (condensación)"
+    ],
+    answer: [1, 2, 0]
+  },
+  {
+    id: 17, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "mc",
+    question: "¿Qué pasaría si el ciclo del agua se interrumpiera?",
+    options: [
+      "Los ríos tendrían más agua",
+      "No habría lluvia y los ecosistemas se secarían",
+      "Las plantas crecerían más rápido",
+      "El aire sería más limpio"
+    ],
+    answer: 1
+  },
+  {
+    id: 18, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "tf",
+    question: "Los ciclos de la naturaleza solo incluyen el ciclo del agua.",
+    answer: false
+  },
+
+  // TEMA 4: Tipos de energía (19-24)
+  {
+    id: 19, topic: 4, topicName: "Tipos de energía",
+    type: "mc",
+    question: "¿Cuál es la energía más abundante que existe en la Tierra?",
+    options: ["Geotérmica", "Eléctrica", "Eólica", "Solar"],
+    answer: 3
+  },
+  {
+    id: 20, topic: 4, topicName: "Tipos de energía",
+    type: "mc",
+    question: "La energía que se obtiene del viento se llama:",
+    options: ["Solar", "Eólica", "Geotérmica", "Nuclear"],
+    answer: 1
+  },
+  {
+    id: 21, topic: 4, topicName: "Tipos de energía",
+    type: "tf",
+    question: "La energía geotérmica aprovecha el calor del interior de la Tierra.",
+    answer: true
+  },
+  {
+    id: 22, topic: 4, topicName: "Tipos de energía",
+    type: "dnd-match",
+    question: "Relaciona cada tipo de energía con su fuente:",
+    sources: ["Solar", "Eólica", "Geotérmica"],
+    targets: [
+      { label: "Calor del interior de la Tierra", correct: 2 },
+      { label: "Radiación del Sol", correct: 0 },
+      { label: "Movimiento del viento", correct: 1 }
+    ]
+  },
+  {
+    id: 23, topic: 4, topicName: "Tipos de energía",
+    type: "mc",
+    question: "¿Cuál de las siguientes es una fuente de energía renovable?",
+    options: ["Petróleo", "Carbón", "Energía solar", "Gas natural"],
+    answer: 2
+  },
+  {
+    id: 24, topic: 4, topicName: "Tipos de energía",
+    type: "tf",
+    question: "Los combustibles fósiles como el petróleo son fuentes de energía renovables.",
+    answer: false
+  },
+
+  // TEMA 5: El universo (25-30)
+  {
+    id: 25, topic: 5, topicName: "El universo",
+    type: "mc",
+    question: "¿Cuál es la principal herramienta que utilizan los astrónomos para observar el universo?",
+    options: ["Microscopio", "Telescopio", "Radar", "Binoculares"],
+    answer: 1
+  },
+  {
+    id: 26, topic: 5, topicName: "El universo",
+    type: "mc",
+    question: "El planeta más cercano al Sol es:",
+    options: ["Venus", "Mercurio", "Marte", "La Tierra"],
+    answer: 1
+  },
+  {
+    id: 27, topic: 5, topicName: "El universo",
+    type: "tf",
+    question: "La Tierra realiza dos movimientos principales: rotación (girar sobre sí misma) y traslación (girar alrededor del Sol).",
+    answer: true
+  },
+  {
+    id: 28, topic: 5, topicName: "El universo",
+    type: "mc",
+    question: "El movimiento de traslación de la Tierra dura aproximadamente:",
+    options: ["24 horas", "7 días", "365 días", "30 días"],
+    answer: 2
+  },
+  {
+    id: 29, topic: 5, topicName: "El universo",
+    type: "dnd-order",
+    question: "Ordena los planetas del Sistema Solar de menor a mayor distancia al Sol:",
+    items: ["La Tierra", "Mercurio", "Neptuno", "Marte"],
+    answer: [1, 0, 3, 2]
+  },
+  {
+    id: 30, topic: 5, topicName: "El universo",
+    type: "tf",
+    question: "La Luna es un planeta del Sistema Solar.",
+    answer: false
+  },
+
+  // TEMA 6: Ecosistemas y ambiente (31-36)
+  {
+    id: 31, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "mc",
+    question: "¿Qué animales y plantas son característicos de la selva seca en México?",
+    options: [
+      "Plantas espinosas, zorrillos, culebras y armadillos",
+      "Grandes pastizales, berrendo y venado bura",
+      "Abundancia de pinos, aves y reptiles",
+      "Árboles cerca de ríos, elefantes y jirafas"
+    ],
+    answer: 0
+  },
+  {
+    id: 32, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "mc",
+    question: "¿Qué podemos hacer desde lo individual para disminuir la emisión de monóxido de carbono?",
+    options: [
+      "Cerrar todas las fábricas",
+      "Disminuir el uso del automóvil y la quema de leña en casa",
+      "Dejar de usar aerosoles",
+      "Sembrar árboles en el desierto"
+    ],
+    answer: 1
+  },
+  {
+    id: 33, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "mc",
+    question: "México es considerado un país:",
+    options: ["Desértico", "Megadiverso", "Sin biodiversidad", "Industrial"],
+    answer: 1
+  },
+  {
+    id: 34, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "tf",
+    question: "La tundra es un ecosistema con temperaturas bajo cero la mayor parte del año.",
+    answer: true
+  },
+  {
+    id: 35, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "dnd-match",
+    question: "Relaciona el ecosistema con su característica:",
+    sources: ["Desierto", "Selva húmeda", "Tundra"],
+    targets: [
+      { label: "Abundancia de lluvia y gran variedad de flora y fauna", correct: 1 },
+      { label: "Llueve muy poco, enorme variedad de cactus", correct: 0 },
+      { label: "Suelo congelado, oso polar y pingüinos", correct: 2 }
+    ]
+  },
+  {
+    id: 36, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "tf",
+    question: "El desarrollo sustentable busca satisfacer las necesidades actuales sin comprometer los recursos de las futuras generaciones.",
+    answer: true
+  },
+
+  // ====== RESERVE QUESTIONS ======
+  // TEMA 1: Ciencia, materia y cambio (extra 3)
+  {
+    id: 37, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "mc",
+    question: "Al calentar una sustancia, sus moléculas:",
+    options: [
+      "Se mueven menos",
+      "Se mueven más",
+      "Dejan de moverse",
+      "Desaparecen"
+    ],
+    answer: 1
+  },
+  {
+    id: 38, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "number",
+    question: "El agua hierve a 100 °C. Si la temperatura sube 25 °C más, ¿a cuántos grados está?",
+    answer: 125, unit: "°C", tolerance: 0
+  },
+  {
+    id: 39, topic: 1, topicName: "Ciencia, materia y cambio",
+    type: "tf",
+    question: "Los objetos artificiales son aquellos creados por el ser humano transformando la naturaleza.",
+    answer: true
+  },
+
+  // TEMA 2: La vida (extra 3)
+  {
+    id: 40, topic: 2, topicName: "La vida",
+    type: "mc",
+    question: "¿Qué necesitan las plantas para realizar la fotosíntesis?",
+    options: ["Solo agua", "Luz solar, agua y dióxido de carbono", "Solo tierra", "Solo oxígeno"],
+    answer: 1
+  },
+  {
+    id: 41, topic: 2, topicName: "La vida",
+    type: "tf",
+    question: "Todos los seres vivos necesitan alimentos, agua, aire y un lugar donde vivir.",
+    answer: true
+  },
+  {
+    id: 42, topic: 2, topicName: "La vida",
+    type: "mc",
+    question: "¿Cuál de las siguientes NO es una función básica de los seres vivos?",
+    options: ["Nutrirse", "Reproducirse", "Flotar", "Crecer y desarrollarse"],
+    answer: 2
+  },
+
+  // TEMA 3: Ciclos de la naturaleza (extra 3)
+  {
+    id: 43, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "mc",
+    question: "La condensación en el ciclo del agua ocurre cuando:",
+    options: [
+      "El agua líquida se evapora",
+      "El vapor de agua se enfría y forma nubes",
+      "El agua se congela",
+      "El agua se filtra en la tierra"
+    ],
+    answer: 1
+  },
+  {
+    id: 44, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "number",
+    question: "El agua se congela a 0 °C. Si la temperatura baja 15 °C bajo cero, ¿a cuántos grados está?",
+    answer: -15, unit: "°C", tolerance: 0
+  },
+  {
+    id: 45, topic: 3, topicName: "Ciclos de la naturaleza",
+    type: "tf",
+    question: "El carbono es uno de los principales nutrientes de las plantas junto con el fósforo y el potasio.",
+    answer: true
+  },
+
+  // TEMA 4: Tipos de energía (extra 3)
+  {
+    id: 46, topic: 4, topicName: "Tipos de energía",
+    type: "mc",
+    question: "¿Qué tipo de energía se produce en las plantas de energía hidroeléctrica?",
+    options: ["Solar", "Eléctrica a partir del agua en movimiento", "Eólica", "Nuclear"],
+    answer: 1
+  },
+  {
+    id: 47, topic: 4, topicName: "Tipos de energía",
+    type: "tf",
+    question: "La energía solar es una fuente de energía no renovable porque se agota.",
+    answer: false
+  },
+  {
+    id: 48, topic: 4, topicName: "Tipos de energía",
+    type: "dnd-order",
+    question: "Ordena cómo se transforma la energía solar para que podamos tener electricidad en casa:",
+    items: [
+      "Los paneles solares capturan la luz del Sol",
+      "La electricidad llega a los enchufes de casa",
+      "La energía solar se convierte en electricidad"
+    ],
+    answer: [0, 2, 1]
+  },
+
+  // TEMA 5: El universo (extra 3)
+  {
+    id: 49, topic: 5, topicName: "El universo",
+    type: "mc",
+    question: "¿Cuántos planetas tiene el Sistema Solar?",
+    options: ["7", "8", "9", "10"],
+    answer: 1
+  },
+  {
+    id: 50, topic: 5, topicName: "El universo",
+    type: "number",
+    question: "La Tierra tarda aproximadamente 24 horas en dar una vuelta sobre sí misma (día). ¿Cuántas horas tarda en dar 3 vueltas?",
+    answer: 72, unit: "horas", tolerance: 0
+  },
+  {
+    id: 51, topic: 5, topicName: "El universo",
+    type: "mc",
+    question: "¿Qué cuerpo celeste es el centro del Sistema Solar?",
+    options: ["La Tierra", "La Luna", "El Sol", "Marte"],
+    answer: 2
+  },
+
+  // TEMA 6: Ecosistemas y ambiente (extra 3)
+  {
+    id: 52, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "mc",
+    question: "¿Qué es la biodiversidad?",
+    options: [
+      "Solo la variedad de animales",
+      "El conjunto de todas las formas de vida en la Tierra",
+      "Solo las plantas de un lugar",
+      "La cantidad de agua en un ecosistema"
+    ],
+    answer: 1
+  },
+  {
+    id: 53, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "tf",
+    question: "México forma parte del grupo de países megadiversos del mundo.",
+    answer: true
+  },
+  {
+    id: 54, topic: 6, topicName: "Ecosistemas y ambiente",
+    type: "mc",
+    question: "El ecosistema urbano se caracteriza por:",
+    options: [
+      "Tener abundante flora y fauna silvestre",
+      "Estar determinado por acciones humanas con poca vegetación natural",
+      "Ser exclusivamente marino",
+      "Tener temperaturas bajo cero todo el año"
+    ],
+    answer: 1
+  }
+];
+
+// TOPIC NAMES
+const TOPICS = [
+  "Ciencia, materia y cambio",
+  "La vida",
+  "Ciclos de la naturaleza",
+  "Tipos de energía",
+  "El universo",
+  "Ecosistemas y ambiente"
+];
+
+// ====== STATE ======
+let currentQ = 0;
+let answers = {};
+let dndState = {};
+let QUESTIONS_ACTIVE = [];
+
+// Fisher-Yates shuffle
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Shuffle multiple-choice options (without losing the answer)
+function shuffleOptions(q) {
+  if (q.type !== "mc" || !q.options) return;
+  const correctText = q.options[q.answer];
+  const indexed = q.options.map((opt, i) => ({ text: opt, origIdx: i }));
+  shuffle(indexed);
+  q.options = indexed.map(x => x.text);
+  q.answer = indexed.findIndex(x => x.origIdx === q.answer);
+}
+
+// Get version info from localStorage
+function getVersionInfo() {
+  const raw = localStorage.getItem("alethia_cnaturales_version");
+  if (raw) {
+    try { return JSON.parse(raw); } catch(e) { return { count: 0, usedIds: [] }; }
+  }
+  return { count: 0, usedIds: [] };
+}
+
+function saveVersionInfo(info) {
+  localStorage.setItem("alethia_cnaturales_version", JSON.stringify(info));
+}
+
+function pickQuestionsForVersion() {
+  const info = getVersionInfo();
+
+  if (info.count >= 3) {
+    return null;
+  }
+
+  const version = info.count + 1;
+  const coreQuestions = QUESTIONS.slice(0, 36);
+  const reserveQuestions = QUESTIONS.slice(36);
+  let selected;
+
+  if (version === 1) {
+    selected = [...coreQuestions];
+  } else if (version === 2) {
+    selected = [...coreQuestions.slice(9), ...reserveQuestions.slice(0, 9)];
+  } else if (version === 3) {
+    selected = [...coreQuestions.slice(18), ...reserveQuestions.slice(0, 18)];
+  }
+
+  shuffle(selected);
+  selected.forEach(q => shuffleOptions(q));
+
+  info.usedIds = selected.map(q => q.id);
+  saveVersionInfo(info);
+
+  return { version: version, questions: selected };
+}
+
+function initState(selectedQs) {
+  currentQ = 0;
+  answers = {};
+  dndState = {};
+  QUESTIONS_ACTIVE = selectedQs;
+
+  QUESTIONS_ACTIVE.forEach(q => {
+    if (q.type === "dnd-order") {
+      dndState[q.id] = [...q.items.map((_, i) => i)];
+      for (let i = dndState[q.id].length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [dndState[q.id][i], dndState[q.id][j]] = [dndState[q.id][j], dndState[q.id][i]];
+      }
+    } else if (q.type === "dnd-match") {
+      dndState[q.id] = {};
+      q.targets.forEach((t, i) => { dndState[q.id][i] = null; });
+    }
+  });
+}
+
+// ====== NAV ======
+function startExam() {
+  const result = pickQuestionsForVersion();
+
+  if (result === null) {
+    alert("🌿 ¡Ya has completado las 3 versiones disponibles de este examen! Solicita a tu asesor (randrade@expgrowai.mx) una nueva versión personalizada. 🌱");
+    return;
+  }
+
+  document.getElementById("portada").classList.remove("active");
+  document.getElementById("examen").classList.add("active");
+
+  document.querySelector(".exam-title").textContent =
+    "🌿 Práctica v" + result.version + " de 3";
+
+  initState(result.questions);
+  renderQuestion(0);
+}
+
+function renderQuestion(idx) {
+  const q = QUESTIONS_ACTIVE[idx];
+  currentQ = idx;
+
+  document.getElementById("qCounter").textContent = `${idx + 1} / ${QUESTIONS_ACTIVE.length}`;
+  document.getElementById("progressFill").style.width = `${((idx + 1) / QUESTIONS_ACTIVE.length) * 100}%`;
+  document.getElementById("topicLabel").textContent = `Tema ${q.topic} · ${q.topicName}`;
+
+  document.getElementById("prevBtn").disabled = idx === 0;
+  const nextBtn = document.getElementById("nextBtn");
+  const submitBtn = document.getElementById("submitBtn");
+
+  if (idx === QUESTIONS_ACTIVE.length - 1) {
+    nextBtn.style.display = "none";
+    submitBtn.style.display = "block";
+  } else {
+    nextBtn.style.display = "block";
+    submitBtn.style.display = "none";
+  }
+
+  renderQuestionContent(q);
+}
+
+function renderQuestionContent(q) {
+  const body = document.getElementById("questionBody");
+  let html = `<div class="question-text">${q.id}. ${q.question}</div>`;
+
+  if (q.type === "mc") {
+    const letters = ["A", "B", "C", "D"];
+    const saved = answers[q.id];
+    html += '<div class="options">';
+    q.options.forEach((opt, i) => {
+      const selected = saved === i ? 'selected' : '';
+      html += `<div class="option-btn ${selected}" onclick="selectMC(${q.id}, ${i})" data-idx="${i}">
+        <span class="letter">${letters[i]}</span>
+        <span>${opt}</span>
+      </div>`;
+    });
+    html += '</div>';
+  } else if (q.type === "tf") {
+    const saved = answers[q.id];
+    const tSel = saved === true ? 'selected-true' : '';
+    const fSel = saved === false ? 'selected-false' : '';
+    html += '<div class="tf-buttons">';
+    html += `<div class="tf-btn ${tSel}" onclick="selectTF(${q.id}, true)">
+      <span class="icon">✅</span><span class="label">Verdadero</span>
+    </div>`;
+    html += `<div class="tf-btn ${fSel}" onclick="selectTF(${q.id}, false)">
+      <span class="icon">❌</span><span class="label">Falso</span>
+    </div>`;
+    html += '</div>';
+  } else if (q.type === "number") {
+    const saved = answers[q.id] !== undefined ? answers[q.id] : '';
+    const unitLabel = q.unit ? `<span class="number-unit">${q.unit}</span>` : '';
+    html += '<div class="number-input-wrap">';
+    html += `<input type="text" class="number-input" id="numInput${q.id}" value="${saved}" placeholder="?" onchange="saveNumber(${q.id}, this.value)" oninput="saveNumber(${q.id}, this.value)">`;
+    html += unitLabel;
+    html += '</div>';
+    html += `<div style="text-align:center;margin-top:10px;font-size:13px;color:var(--text-light);">Escribe el número</div>`;
+  } else if (q.type === "dnd-order") {
+    const order = dndState[q.id] || q.items.map((_, i) => i);
+    html += '<div class="dnd-container"><div class="dnd-hint">🖱️ Arrastra para reordenar los elementos</div><div class="dnd-items" id="dndList' + q.id + '">';
+    order.forEach((itemIdx, pos) => {
+      html += `<div class="dnd-item" draggable="true" data-pos="${pos}" data-idx="${itemIdx}" ondragstart="dndStart(event)" ondragover="dndOver(event)" ondrop="dndDrop(event)" ondragend="dndEnd(event)">
+        <span class="drag-handle">⠿</span>
+        <span class="dnd-number">${pos + 1}</span>
+        <span>${q.items[itemIdx]}</span>
+      </div>`;
+    });
+    html += '</div></div>';
+  } else if (q.type === "dnd-match") {
+    const matches = dndState[q.id] || {};
+    const shuffled = [...q.sources.map((_, i) => i)];
+    if (!dndState._matchShuffled) {
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      dndState._matchShuffled = {};
+    }
+    if (!dndState._matchShuffled[q.id]) {
+      dndState._matchShuffled[q.id] = shuffled;
+    }
+    const srcOrder = dndState._matchShuffled[q.id];
+
+    html += '<div class="dnd-container"><div class="dnd-hint">🖱️ Arrastra cada elemento a su lugar correcto</div><div class="dnd-match">';
+    html += '<div class="dnd-match-col"><h4>📍 Conceptos</h4>';
+    srcOrder.forEach((srcIdx) => {
+      html += `<div class="match-source" draggable="true" data-q="${q.id}" data-src="${srcIdx}" ondragstart="matchDragStart(event)" ondragend="matchDragEnd(event)">${q.sources[srcIdx]}</div>`;
+    });
+    html += '</div><div class="dnd-match-col"><h4>🎯 Descripción</h4>';
+    q.targets.forEach((t, i) => {
+      const matched = matches[i];
+      const filled = matched !== null ? 'filled' : '';
+      const content = matched !== null ? q.sources[matched] : '⬇️ Arrastra aquí';
+      html += `<div class="match-target ${filled}" data-q="${q.id}" data-targ="${i}" ondragover="matchDragOver(event)" ondrop="matchDrop(event)">${content}</div>`;
+    });
+    html += '</div></div></div>';
+  }
+
+  body.innerHTML = html;
+}
+
+// ====== ANSWER HANDLERS ======
+function selectMC(qId, idx) {
+  if (answers[qId] === idx) {
+    delete answers[qId];
+  } else {
+    answers[qId] = idx;
+  }
+  renderQuestion(currentQ);
+}
+
+function selectTF(qId, val) {
+  if (answers[qId] === val) {
+    delete answers[qId];
+  } else {
+    answers[qId] = val;
+  }
+  renderQuestion(currentQ);
+}
+
+function saveNumber(qId, val) {
+  if (val === '' || val === '-') {
+    delete answers[qId];
+    return;
+  }
+  const fracMatch = val.trim().match(/^(-?\d+)\s*\/\s*(-?\d+)$/);
+  if (fracMatch) {
+    const num = parseInt(fracMatch[1]);
+    const den = parseInt(fracMatch[2]);
+    if (den !== 0) {
+      answers[qId] = num / den;
+      return;
+    }
+  }
+  const parsed = parseFloat(val);
+  if (!isNaN(parsed)) {
+    answers[qId] = parsed;
+  }
+}
+
+// ====== DRAG & DROP ORDER ======
+let dragSrcIdx = null;
+let dragSrcPos = null;
+
+function dndStart(e) {
+  const item = e.target.closest('.dnd-item');
+  if (!item) return;
+  dragSrcPos = parseInt(item.dataset.pos);
+  dragSrcIdx = parseInt(item.dataset.idx);
+  item.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', '');
+}
+
+function dndOver(e) {
+  e.preventDefault();
+  const item = e.target.closest('.dnd-item');
+  if (!item || parseInt(item.dataset.pos) === dragSrcPos) return;
+  document.querySelectorAll('.dnd-item').forEach(el => el.classList.remove('drag-over'));
+  item.classList.add('drag-over');
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function dndDrop(e) {
+  e.preventDefault();
+  const item = e.target.closest('.dnd-item');
+  if (!item) return;
+  const targetPos = parseInt(item.dataset.pos);
+  const q = QUESTIONS_ACTIVE[currentQ];
+  if (q.type !== 'dnd-order') return;
+
+  const order = dndState[q.id];
+  if (!order) return;
+
+  const moved = order.splice(dragSrcPos, 1)[0];
+  order.splice(targetPos, 0, moved);
+
+  renderQuestion(currentQ);
+}
+
+function dndEnd(e) {
+  document.querySelectorAll('.dnd-item').forEach(el => el.classList.remove('dragging', 'drag-over'));
+}
+
+// ====== DRAG & DROP MATCH ======
+function matchDragStart(e) {
+  const el = e.target.closest('.match-source');
+  if (!el) return;
+  el.classList.add('dragging');
+  e.dataTransfer.setData('text/plain', JSON.stringify({
+    qId: parseInt(el.dataset.q),
+    srcIdx: parseInt(el.dataset.src)
+  }));
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function matchDragOver(e) {
+  e.preventDefault();
+  const target = e.target.closest('.match-target');
+  if (!target) return;
+  target.classList.add('drag-over');
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function matchDrop(e) {
+  e.preventDefault();
+  const target = e.target.closest('.match-target');
+  if (!target) return;
+  target.classList.remove('drag-over');
+
+  const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+  const qId = data.qId;
+  const srcIdx = data.srcIdx;
+  const targIdx = parseInt(target.dataset.targ);
+
+  const q = QUESTIONS.find(q => q.id === qId);
+  if (!q || q.type !== 'dnd-match') return;
+
+  const matches = dndState[qId];
+
+  if (matches[targIdx] !== null) {
+    return;
+  }
+
+  for (let key in matches) {
+    if (matches[key] === srcIdx) {
+      matches[key] = null;
+    }
+  }
+
+  matches[targIdx] = srcIdx;
+  renderQuestion(currentQ);
+}
+
+function matchDragEnd(e) {
+  const el = e.target.closest('.match-source');
+  if (el) el.classList.remove('dragging');
+  document.querySelectorAll('.match-target').forEach(el => el.classList.remove('drag-over'));
+}
+
+// ====== NAVIGATION ======
+function prevQuestion() {
+  if (currentQ > 0) renderQuestion(currentQ - 1);
+}
+
+function nextQuestion() {
+  const q = QUESTIONS_ACTIVE[currentQ];
+  if (!isAnswered(q)) {
+    alert('🌿 ¡Responde esta pregunta antes de continuar!');
+    return;
+  }
+  if (currentQ < QUESTIONS_ACTIVE.length - 1) renderQuestion(currentQ + 1);
+}
+
+function isAnswered(q) {
+  if (q.type === 'mc' || q.type === 'tf') {
+    return answers[q.id] !== undefined;
+  } else if (q.type === 'number') {
+    return answers[q.id] !== undefined && answers[q.id] !== '' && !isNaN(answers[q.id]);
+  } else if (q.type === 'dnd-order') {
+    return dndState[q.id] && dndState[q.id].length > 0;
+  } else if (q.type === 'dnd-match') {
+    const matches = dndState[q.id];
+    if (!matches) return false;
+    return Object.values(matches).every(v => v !== null);
+  }
+  return false;
+}
+
+// ====== FINISH ======
+function finishExam() {
+  const unanswered = QUESTIONS_ACTIVE.filter(q => !isAnswered(q));
+  if (unanswered.length > 0) {
+    if (!confirm(`🌿 Aún te faltan ${unanswered.length} pregunta(s) por responder. ¿Quieres finalizar de todas formas?`)) {
+      return;
+    }
+  }
+
+  let correct = 0;
+  let topicScores = {};
+
+  QUESTIONS_ACTIVE.forEach(q => {
+    let isCorrect = false;
+
+    if (q.type === 'mc') {
+      isCorrect = answers[q.id] === q.answer;
+    } else if (q.type === 'tf') {
+      isCorrect = answers[q.id] === q.answer;
+    } else if (q.type === 'number') {
+      const userAns = answers[q.id];
+      if (userAns !== undefined && !isNaN(userAns)) {
+        isCorrect = Math.abs(userAns - q.answer) <= (q.tolerance || 0);
+      }
+    } else if (q.type === 'dnd-order') {
+      const order = dndState[q.id];
+      if (order && order.length === q.answer.length) {
+        isCorrect = order.every((v, i) => v === q.answer[i]);
+      }
+    } else if (q.type === 'dnd-match') {
+      const matches = dndState[q.id];
+      if (matches) {
+        isCorrect = q.targets.every((t, i) => matches[i] === t.correct);
+      }
+    }
+
+    if (isCorrect) correct++;
+
+    if (!topicScores[q.topic]) {
+      topicScores[q.topic] = { correct: 0, total: 0, name: q.topicName };
+    }
+    topicScores[q.topic].total++;
+    if (isCorrect) topicScores[q.topic].correct++;
+  });
+
+  const info = getVersionInfo();
+  info.count += 1;
+  saveVersionInfo(info);
+
+  showResults(correct, topicScores);
+}
+
+function showResults(correct, topicScores) {
+  document.getElementById("examen").classList.remove("active");
+  document.getElementById("resultados").classList.add("active");
+
+  const pct = Math.round((correct / QUESTIONS_ACTIVE.length) * 100);
+  document.getElementById("finalScore").textContent = correct;
+  document.getElementById("percentage").textContent = `${pct}%`;
+  document.getElementById("scoreLabel").textContent = `de ${QUESTIONS_ACTIVE.length} aciertos`;
+
+  let icon, title, msg;
+  if (pct >= 90) {
+    icon = "🌿🏆";
+    title = "¡Increíble, Alethia! 🌟";
+    msg = "Eres una verdadera estrella de las ciencias naturales. ¡Sigue así! Tu esfuerzo vale la pena. 파이팅! 🌿";
+  } else if (pct >= 70) {
+    icon = "🌟🌱";
+    title = "¡Muy bien hecho! 🌿";
+    msg = "Tienes un buen dominio de los temas. Revisa las áreas donde fallaste para seguir mejorando. ¡Tú puedes! 🍃";
+  } else if (pct >= 50) {
+    icon = "💪🌿";
+    title = "¡Vas por buen camino!";
+    msg = "Sigue practicando, Alethia. Identifica los temas que necesitas reforzar y verás cómo mejoras. ¡No te rindas! 🌱";
+  } else {
+    icon = "🌱🌿";
+    title = "Este es solo el comienzo";
+    msg = "Cada intento te acerca más a tu meta. Revisa los temas con calma y vuelve a intentarlo. ¡Confiamos en ti! 파이팅! 🌟";
+  }
+
+  document.getElementById("resultIcon").textContent = icon;
+  document.getElementById("resultTitle").textContent = title;
+
+  let breakdownHtml = '';
+  for (let t = 1; t <= 6; t++) {
+    const ts = topicScores[t];
+    if (ts) {
+      breakdownHtml += `<div class="breakdown-item">
+        <div class="b-topic">${ts.name}</div>
+        <div class="b-score">${ts.correct}<span class="b-total"> / ${ts.total}</span></div>
+      </div>`;
+    }
+  }
+  document.getElementById("breakdown").innerHTML = breakdownHtml;
+
+  const weakTopics = Object.values(topicScores).filter(ts => ts.correct < ts.total * 0.6);
+  let extraMsg = msg;
+  if (weakTopics.length > 0) {
+    extraMsg += `<br><br>📚 <strong>Para mejorar:</strong> repasa ${weakTopics.map(w => w.name).join(", ")}.`;
+  }
+  document.getElementById("resultSubtitle").textContent =
+    pct >= 70 ? "¡Sigue brillando!" :
+    pct >= 50 ? "Sigue practicando y mejorarás" :
+    "Cada intento cuenta, ¡inténtalo de nuevo!";
+  document.getElementById("resultMessage").innerHTML = extraMsg;
+}
+
+function resetExam() {
+  document.getElementById("resultados").classList.remove("active");
+  document.getElementById("portada").classList.add("active");
+}
+
+// ====== HIDDEN RESET (triple tap on 과학 연습) ======
+let tapCount = 0;
+let tapTimer = null;
+
+function tripleTapReset() {
+  tapCount++;
+  const el = document.getElementById("resetTrigger");
+  if (el) {
+    el.style.opacity = tapCount >= 3 ? "0.3" : "0.5";
+    setTimeout(() => { if (el) el.style.opacity = ""; }, 300);
+  }
+  if (tapCount === 1) {
+    tapTimer = setTimeout(() => { tapCount = 0; }, 800);
+  }
+  if (tapCount >= 3) {
+    clearTimeout(tapTimer);
+    tapCount = 0;
+    localStorage.removeItem("alethia_cnaturales_version");
+    showToast("✅ Examen reiniciado — el contador de versiones volvió a cero");
+    document.getElementById("examen").classList.remove("active");
+    document.getElementById("resultados").classList.remove("active");
+    document.getElementById("portada").classList.add("active");
+    document.querySelector(".exam-title").textContent = "🌿 Práctica de Ciencias Naturales";
+  }
+}
+
+function showToast(msg) {
+  const toast = document.getElementById("resetToast");
+  toast.textContent = msg;
+  toast.style.display = "block";
+  setTimeout(() => { toast.style.display = "none"; }, 2500);
+}
+
+// ====== RESET BUTTON IN EXAM ======
+function resetDuringExam() {
+  if (!confirm("↺ ¿Reiniciar el examen desde cero? Se perderán tus respuestas.")) return;
+  localStorage.removeItem("alethia_cnaturales_version");
+  showToast("✅ Examen reiniciado — todo como nuevo");
+  document.getElementById("examen").classList.remove("active");
+  document.getElementById("resultados").classList.remove("active");
+  document.getElementById("portada").classList.add("active");
+  document.querySelector(".exam-title").textContent = "🌿 Práctica de Ciencias Naturales";
+}
+</script>
+</body>
+</html>
